@@ -17,7 +17,7 @@ export function EpisodesMenu({title, episodes}: EpisodesMenuProps) {
 
   return (
     // ${isLoading ? "pointer-events-none opacity-50" : ""}
-    <ScrollArea className={`w-96 h-screen whitespace-nowrap rounded-md border `}>
+    <ScrollArea className={`w-72 h-screen whitespace-nowrap rounded-md border `}>
       <div className="p-4">
         <div className="flex items-center justify-between pb-4">
           <h4 className="font-medium leading-none">{title}</h4>

@@ -10,10 +10,10 @@ const AnimePlayer = ({url}: AnimePlayerProps) => {
   return (
       <ReactPlayer 
         url={url} 
-        controls={true}
-        playing={true}
-        width='100vh'
-        height='100vh'
+        controls
+        playing
+        width="70%"
+        height="70%"
       />
   )
 }
