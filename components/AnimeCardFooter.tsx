@@ -6,8 +6,12 @@ interface AnimeCardFooterProps {
 
 const AnimeCardFooter = ({anime}: AnimeCardFooterProps) => {
   return (
-    <div className="w-full p-4 bg-secondary">
-      AnimeCardFooter
+    <div className="w-full p-2">
+      {(anime.title.length > 16 ? (
+          <>{anime.title}</>
+        ) : (
+          <>{anime.title}</>
+        ))}
     </div>
   )
 }

@@ -2,16 +2,16 @@
 
 import { ANIME } from '@consumet/extensions';
 
-export default async function getAnimeInfo() {
+export default async function getAnimeInfo(title: string) {
   try {
     // Create a new instance of AnimeSaturn provider 
-    const animeProvider = new ANIME.AnimeSaturn();
-
-    const results = await animeProvider.search("One Piece"); 
+    const animeProvider = new ANIME.AnimePahe();
+    console.log(title)
+    const results = await animeProvider.search(title); 
 
     // Get the first anime info
-    const firstAnime = results.results[0];
-    const animeInfo = await animeProvider.fetchAnimeInfo(firstAnime.id);
+    const firstAnime = results.results[0].id;
+    const animeInfo = await animeProvider.fetchAnimeInfo(firstAnime);
 
     // Check if animeInfo.episodes is defined before proceeding
     if (!animeInfo.episodes || animeInfo.episodes.length === 0) {

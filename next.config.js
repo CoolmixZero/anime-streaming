@@ -2,7 +2,16 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['cdn.myanimelist.net'],
+    remotePatterns: [
+      {
+      protocol: 'https',
+      hostname: 'cdn.myanimelist.net'
+      },
+      {
+      protocol: 'https',
+      hostname: 'i.animepahe.ru'
+      },
+    ],
   },
 }
 
