@@ -17,19 +17,20 @@ export function EpisodesMenu({title, episodes}: EpisodesMenuProps) {
 
   return (
     // ${isLoading ? "pointer-events-none opacity-50" : ""}
-    <ScrollArea className={`w-72 h-screen whitespace-nowrap rounded-md border `}>
+    <ScrollArea className={`w-full lg:w-72 h-fit whitespace-nowrap rounded-md border mb-6`}>
       <div className="p-4">
         <div className="flex items-center justify-between pb-4">
           <h4 className="font-medium leading-none">{title}</h4>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 justify-center">
-        {episodes.map((episode: any) => (
-          <>
-            <Link href={`${path}/ep=${episode.number}`} key={episode.id} className="flex items-center justify-center py-2 hover:bg-secondary border-b">
-              <div>{episode.number}</div>
-            </Link>
-          </>
-        ))}
+        <div className="grid grid-cols-4 gap-2 justify-center">
+          {episodes && episodes.map((episode: any) => (
+              <Link key={episode.number} 
+                href={`${path}/ep=${episode.number}`} 
+                className="flex items-center justify-center py-2 hover:bg-secondary border-b"
+              >
+                <div>{episode.number}</div>
+              </Link>
+          ))}
         </div>
       </div>
       <ScrollBar orientation="vertical" />

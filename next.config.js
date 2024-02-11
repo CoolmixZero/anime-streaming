@@ -11,6 +11,10 @@ const nextConfig = {
       protocol: 'https',
       hostname: 'i.animepahe.ru'
       },
+      {
+        protocol: 'https',
+        hostname: 'img.flawlessfiles.com'
+      }
     ],
   },
 }

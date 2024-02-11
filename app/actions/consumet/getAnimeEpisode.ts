@@ -1,27 +1,51 @@
-"use server"
+"use server";
 
-import { ANIME } from '@consumet/extensions';
-import { FFmpeg } from '@ffmpeg/ffmpeg';
-import { fetchFile, toBlobURL } from '@ffmpeg/util';
+import { ANIME } from "@consumet/extensions";
 
+export default async function getAnimeEpisode(
+  animeTitle: string,
+  episodeNumber: number
+) {
+  // Create a new instance of AnimeSaturn provider
+  const animeProvider = new ANIME.Gogoanime;
 
-export default async function getAnimeEpisode(animeTitle: string, episodeNumber: number) {
-  try {
-    // Create a new instance of AnimeSaturn provider 
-    const animeProvider = new ANIME.AnimePahe();
+  // Search for the anime
+  const searchResponse = await animeProvider.search(animeTitle);
+  if (searchResponse.results.length === 0) return -1;
 
-    // get the available streaming servers for the first episode
-    // const streamingServers = await animeProvider.fetchEpisodeSources("frieren-beyond-journeys-end-18542$episode$107259$both");
-    const res = await animeProvider.search(animeTitle);
-    const data1 = await animeProvider.fetchAnimeInfo(res.results[0].id);
-    const data = await animeProvider.fetchEpisodeSources(data1.episodes![episodeNumber - 1].id);
-    // console.log(results);
+  // Get the anime id
+  const animeId = searchResponse.results[0].id;
 
-    console.log(data);
+  // Get the episode id
+  const episodeIdResponse = await animeProvider.fetchAnimeInfo(animeId);
+  const animeEpisodeId = episodeIdResponse.episodes![episodeNumber - 1]?.id;
 
-    return data;
-  } catch (error) {
-    return [];
+  if (animeEpisodeId === undefined) return -1;
+
+  // Get the episode sources
+  const data = await animeProvider.fetchEpisodeSources(animeEpisodeId);
+
+  // looking for the best resolution
+  for (let i = 0; i < Object.keys(data.sources).length; i++) {
+    if (data.sources[i].quality == "1080p") {
+      console.log("Playing episode in " + data.sources[i].quality);
+      return data.sources[i];
+    }
   }
-}
 
+  for (let i = 0; i < Object.keys(data.sources).length; i++) {
+    if (data.sources[i].quality == "720p") {
+      console.log("Playing episode in " + data.sources[i].quality);
+      return data.sources[i];
+    }
+  }
+
+  for (let i = 0; i < Object.keys(data.sources).length; i++) {
+    if (data.sources[i].quality == "default") {
+      console.log("Playing episode in " + data.sources[i].quality);
+      return data.sources[i];
+    }
+  }
+
+  return data.sources[0];
+}

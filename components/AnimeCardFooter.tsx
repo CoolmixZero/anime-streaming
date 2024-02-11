@@ -1,5 +1,7 @@
 "use client"
 
+import { IAnime } from "@/app/types/type"
+
 interface AnimeCardFooterProps {
   anime: IAnime
 }
@@ -7,10 +9,10 @@ interface AnimeCardFooterProps {
 const AnimeCardFooter = ({anime}: AnimeCardFooterProps) => {
   return (
     <div className="w-full p-2">
-      {(anime.title.length > 16 ? (
-          <>{anime.title}</>
+      {(anime.title_english.length > 16 ? (
+          <>{anime.title_english}</>
         ) : (
-          <>{anime.title}</>
+          <>{anime.title_english}</>
         ))}
     </div>
   )

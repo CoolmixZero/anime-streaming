@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import getAnimeEpisode from '@/app/actions/consumet/getAnimeEpisode';
-import AnimePlayer from '@/components/AnimePlayer';
+import AnimePlayer from '../_components/AnimePlayer';
 
 interface EpisodePageProps {
   params: {
@@ -12,17 +12,19 @@ interface EpisodePageProps {
 }
 
 const EpisodePage = ({ params }: EpisodePageProps) => {
-  const [episode, setEpisode] = useState<any | null>(null);
+  const [videoSource, setVideoSource] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const episodeId = params.episodeId.split('%3D')[1];
+  const titleId = params.titleId.split('.')[0].replace(/-/g, ' ');
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const episodeId = params.episodeId.split('%3D')[1];
-        const titleId = params.titleId.split('.')[0].replace('-', ' ');
         const data = await getAnimeEpisode(titleId, Number(episodeId));
-        setEpisode(data);
+        setVideoSource(data);
       } catch (error) {
         console.error('Error fetching episode:', error);
       }
@@ -32,15 +34,17 @@ const EpisodePage = ({ params }: EpisodePageProps) => {
     };
 
     fetchData();
-  }, [params.episodeId, params.titleId]);
+  }, [titleId, episodeId]);
 
-  if (!episode) {
+  if (!videoSource || loading) {
     return <div>Loading...</div>; // You might want to add a loading state
   }
 
+  console.log(videoSource);
+
   return (
     <div className='flex flex-col md:flex-row py-4 px-12'>
-      <AnimePlayer url={episode.sources[1].url} />
+      <AnimePlayer url={videoSource.url} />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-interface IAnime {
+export interface IAnime {
     mal_id: number;
     url: string;
     images: {

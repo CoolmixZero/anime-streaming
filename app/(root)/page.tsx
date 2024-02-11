@@ -3,7 +3,7 @@ import { getAnimes } from '../actions/getAnimes';
 
 export default async function Home() {
   const data = await getAnimes();
-  console.log(data);
+  
   return (
     <main className='flex flex-col items-center justify-center px-12 py-6'>
       <h1 className='text-4xl font-bold'>Top animes</h1>
